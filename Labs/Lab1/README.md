@@ -5,7 +5,8 @@
 **- Head First Servlets and JSP, Second Edition**  
   * **Chapter 4**: Being a Servlet: request AND response   
   * **Chapter 5**: Being a Web App: attributes and listeners   
-  * **Chapter 6**: Conversational state: session management   
+  * **Chapter 6**: Conversational state: session management  
+  
 **- Spring in Action (5th edition)**   
   * **Chapter 1**: Getting started with Spring  
 
