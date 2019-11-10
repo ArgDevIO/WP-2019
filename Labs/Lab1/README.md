@@ -1,7 +1,13 @@
 # Лабораториска вежба 1
 
 ## Потребно предзнаење
-За да разберете како функционираат концептите опфатени во оваа лабораториска вежба, потребно е да прочитате: - Head First Servlets and JSP, Second Edition - Chapter 4: Being a Servlet: request AND response - Chapter 5: Being a Web App: attributes and listeners - Chapter 6: Conversational state: session management - Spring in Action (5th edition) - Chapter 1: Getting started with Spring
+За да разберете како функционираат концептите опфатени во оваа лабораториска вежба, потребно е да прочитате: 
+**- Head First Servlets and JSP, Second Edition**
+    - **Chapter 4**: Being a Servlet: request AND response 
+    - **Chapter 5**: Being a Web App: attributes and listeners 
+    - **Chapter 6**: Conversational state: session management 
+**- Spring in Action (5th edition)** 
+    - **Chapter 1**: Getting started with Spring
 
 ## Спецификација за лабораториската вежба
 1. Креирајте нов Spring Boot проект со група mk.finki.ukim.mk и artefactId=lab кој ги има истите зависности како проектот од аудиториските вежби (зависностите може да ги видите во <dependency> тагвите во pom.xml.
