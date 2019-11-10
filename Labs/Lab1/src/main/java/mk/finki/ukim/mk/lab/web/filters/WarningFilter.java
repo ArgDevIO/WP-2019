@@ -9,8 +9,7 @@ import java.io.IOException;
 @WebFilter(urlPatterns = {"/selectPizzaSize", "/pizzaOrder"})
 public class WarningFilter implements Filter {
     @Override
-    public void init(FilterConfig filterConfig) throws ServletException {
-
+    public void init(FilterConfig filterConfig) {
     }
 
     @Override
@@ -19,13 +18,25 @@ public class WarningFilter implements Filter {
         HttpServletResponse httpResp = (HttpServletResponse) servletResponse;
         HttpServletRequest httpRequest = (HttpServletRequest) servletRequest;
 
+        /**
+         **************** BONUS TASK (+5pts) ******************
+         * 1. Don't let the user continue to Pizza Size Selection
+         *    if no pizza is selected when pressing SUBMIT!
+         *    In this case show an error message "Please, select a pizza!"
+         *    and send the user back to select a pizza!
+         *
+         * 2. Don't let the user continue to PizzaOrder
+         *    if the selected pizza is "Margherita" when pressing SUBMIT on PizzaSizeSelection page!
+         *    In this case show an error message "Margherita is out of stock!"
+         *    and send the user back to select another pizza!
+         */
         String path = httpRequest.getServletPath();
         String selectedPizza = (String) httpRequest.getSession().getAttribute("selectedPizza");
 
         switch (path) {
             case "/selectPizzaSize":
                 if (selectedPizza == null || selectedPizza.isEmpty()) {
-                    httpRequest.getSession().setAttribute("warning", "Please select a pizza!");
+                    httpRequest.getSession().setAttribute("warning", "Please, select a pizza!");
                     httpResp.sendRedirect("/");
                 } else {
                     filterChain.doFilter(servletRequest, servletResponse);
@@ -47,6 +58,5 @@ public class WarningFilter implements Filter {
 
     @Override
     public void destroy() {
-
     }
 }

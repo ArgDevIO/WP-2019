@@ -30,6 +30,8 @@ public class PizzaOrderServlet extends HttpServlet {
         WebContext webContext = new WebContext(req, resp, req.getServletContext());
         webContext.setVariable("selectedPizza", selectedPizza);
         webContext.setVariable("selectedPizzaSize", selectedPizzaSize);
+
+        resp.setContentType("text/html; charset=UTF-8");
         this.springTemplateEngine.process("deliveryInfo.html", webContext, resp.getWriter());
     }
 }

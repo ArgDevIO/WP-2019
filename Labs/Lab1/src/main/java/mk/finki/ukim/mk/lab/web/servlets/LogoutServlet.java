@@ -1,6 +1,5 @@
 package mk.finki.ukim.mk.lab.web.servlets;
 
-import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -11,7 +10,7 @@ import java.io.IOException;
 public class LogoutServlet extends HttpServlet {
 
     @Override
-    protected void service(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+    protected void service(HttpServletRequest req, HttpServletResponse resp) throws IOException {
         System.out.println("[WP-Log] {LogoutServlet :: service()}");
         req.getSession().invalidate();
         resp.sendRedirect("/");

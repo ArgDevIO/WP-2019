@@ -5,7 +5,6 @@ import mk.finki.ukim.mk.lab.service.PizzaService;
 import org.thymeleaf.context.WebContext;
 import org.thymeleaf.spring5.SpringTemplateEngine;
 
-import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -29,22 +28,28 @@ public class ShowPizzaServlet extends HttpServlet {
         System.out.println("[WP-Log] {ShowPizzaServlet :: doGet()}");
 
         WebContext webContext = new WebContext(req, resp, req.getServletContext());
+
         List<Pizza> pizzas = pizzaService.listPizzas();
         webContext.setVariable("pizzas", pizzas);
-        resp.setContentType("text/html; charset=UTF-8");
 
+        //region Bonus task
+        /**
+         * Retrieving warning message from Session & displaying it on screen!
+         * This warning message is initialized in web/filters/WarningFilter::doFilter()
+         */
         String warning = (String) req.getSession().getAttribute("warning");
-
         if (warning != null) {
             webContext.setVariable("warning", warning);
             req.getSession().removeAttribute("warning");
         }
+        //endregion
 
+        resp.setContentType("text/html; charset=UTF-8");
         this.springTemplateEngine.process("listPizzas.html", webContext, resp.getWriter());
     }
 
     @Override
-    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException {
         String selectedPizza = req.getParameter("pizza");
         req.getSession().setAttribute("selectedPizza", selectedPizza);
         resp.sendRedirect("/selectPizzaSize");
