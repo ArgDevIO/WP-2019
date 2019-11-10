@@ -1,27 +1,27 @@
 # Лабораториска вежба 1
 
 ## Потребно предзнаење
-За да разберете како функционираат концептите опфатени во оваа лабораториска вежба, потребно е да прочитате: 
-**- Head First Servlets and JSP, Second Edition**
-    - **Chapter 4**: Being a Servlet: request AND response 
-    - **Chapter 5**: Being a Web App: attributes and listeners 
-    - **Chapter 6**: Conversational state: session management 
-**- Spring in Action (5th edition)** 
-    - **Chapter 1**: Getting started with Spring
+За да разберете како функционираат концептите опфатени во оваа лабораториска вежба, потребно е да прочитате:   
+**- Head First Servlets and JSP, Second Edition**  
+    - **Chapter 4**: Being a Servlet: request AND response   
+    - **Chapter 5**: Being a Web App: attributes and listeners   
+    - **Chapter 6**: Conversational state: session management   
+**- Spring in Action (5th edition)**   
+    - **Chapter 1**: Getting started with Spring  
 
 ## Спецификација за лабораториската вежба
 1. Креирајте нов Spring Boot проект со група mk.finki.ukim.mk и artefactId=lab кој ги има истите зависности како проектот од аудиториските вежби (зависностите може да ги видите во <dependency> тагвите во pom.xml.
 2. Дефинирајте пакет mk.ukim.finki.wp.lab.model и во него креирајте ја Order класата. Таа треба да содржи:
-  * String pizzaType
-  * String pizzaSize
-  * String clientName,
-  * String clientAddressи
-  * Long orderId.
+    * String pizzaType
+    * String pizzaSize
+    * String clientName,
+    * String clientAddressи
+    * Long orderId.
 3. Во mk.ukim.finki.wp.lab.model креирајте Pizza класа која ќе содржи:
-  * String name,
-  * String description
+    * String name,
+    * String description
 4. Креирајте класа PizzaRepository во пакетот mk.ukim.finki.wp.lab.repository, во која ќе чувате List<Pizza> иницијализирана со 10 вредности.
-  * Имплементирајте метод public List<Pizza> getAllPizzas(); кој само ќе ја врати листата.
+    * Имплементирајте метод public List<Pizza> getAllPizzas(); кој само ќе ја врати листата.
 5. Дефинирајте ги следните интерфејси во mk.ukim.finki.wp.lab.service кои ќе ги претставуваат бизнис функционалностите на апликацијата:
   ```Java
   public interface PizzaService {
