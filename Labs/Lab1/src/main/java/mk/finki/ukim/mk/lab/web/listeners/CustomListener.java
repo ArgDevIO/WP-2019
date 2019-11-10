@@ -9,11 +9,11 @@ public class CustomListener implements ServletRequestListener {
 
     @Override
     public void requestDestroyed(ServletRequestEvent sre) {
-        System.out.println("Request Destroyed");
+        System.out.println("[WP-Log] {requestDestroyed()}");
     }
 
     @Override
     public void requestInitialized(ServletRequestEvent sre) {
-        System.out.println("Request Initialized");
+        System.out.println("[WP-Log] {requestInitialized()}");
     }
 }
