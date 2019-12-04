@@ -6,23 +6,18 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
-import javax.persistence.ManyToMany;
 import javax.persistence.Table;
-import java.util.List;
 
 @NoArgsConstructor
 @AllArgsConstructor
 @Data
 @Entity
-@Table(name = "Pizzas")
-public class Pizza {
+@Table(name = "Ingredients")
+public class Ingredient {
 
     @Id
     private String name;
-    private String description;
-
-    @ManyToMany(targetEntity = Ingredient.class)
-    private List<Ingredient> ingredients;
-
+    private boolean spicy;
+    private float amount;
     private boolean veggie;
 }
