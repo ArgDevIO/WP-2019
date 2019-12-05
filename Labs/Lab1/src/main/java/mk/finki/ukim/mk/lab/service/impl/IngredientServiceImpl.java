@@ -4,7 +4,12 @@ import mk.finki.ukim.mk.lab.model.Ingredient;
 import mk.finki.ukim.mk.lab.model.exceptions.InvalidIngredientsIdException;
 import mk.finki.ukim.mk.lab.repository.IngredientRepository;
 import mk.finki.ukim.mk.lab.service.IngredientService;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @Service
 public class IngredientServiceImpl implements IngredientService {
@@ -32,4 +37,26 @@ public class IngredientServiceImpl implements IngredientService {
 
         return this.ingredientRepository.save(ingredient);
     }
+
+    @Override
+    public void deleteIngredient(String ingredientId) {
+        this.ingredientRepository.deleteById(ingredientId);
+    }
+
+    @Override
+    public Page<Ingredient> getIngredients(int page, int size) {
+        return this.ingredientRepository.findAll(PageRequest.of(page, size, Sort.by("name").ascending()));
+    }
+
+    @Override
+    public Ingredient getIngredient(String ingredientId) {
+        return this.ingredientRepository.findById(ingredientId).orElseThrow(InvalidIngredientsIdException::new);
+    }
+
+    @Override
+    public List<Ingredient> getBySpicy(boolean spicy) {
+        return this.ingredientRepository.getBySpicy(spicy);
+    }
+
+
 }
