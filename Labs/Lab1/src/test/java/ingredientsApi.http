@@ -1,0 +1,13 @@
+POST http://localhost:8080/ingredients
+Content-Type: application/x-www-form-urlencoded
+
+name=Mushrooms&spicy=false&veggie=true&amount=2
+
+###
+
+PATCH http://localhost:8080/ingredients/Mushrooms
+Content-Type: application/x-www-form-urlencoded
+
+name=Mushrooms&spicy=true&veggie=true&amount=4
+
+###
