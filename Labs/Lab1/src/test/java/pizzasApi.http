@@ -1,0 +1,37 @@
+### Creating Carbonara Pizza
+POST http://localhost:8080/pizzas
+Content-Type: application/x-www-form-urlencoded
+
+name=Carbonara&description=DeliciousPizza&ingredients=Mushrooms&ingredients=Sauce&veggie=true
+
+
+### Creating Margherita Pizza
+POST http://localhost:8080/pizzas
+Content-Type: application/x-www-form-urlencoded
+
+name=Margherita&description=BasicPizza&ingredients=Cheese&ingredients=Sauce&veggie=true
+
+
+### Editing Carbonara Pizza
+PUT http://localhost:8080/pizzas/Margherita
+Content-Type: application/x-www-form-urlencoded
+
+name=Margherita&description=NewPizza&ingredients=Mushrooms&ingredients=Sauce&ingredients=Cheese&veggie=false
+
+
+### Deleting Carbonara Pizza
+DELETE http://localhost:8080/pizzas/Carbonara
+
+
+### Get all Pizzas
+GET http://localhost:8080/pizzas
+
+
+### Get Pizza by ID
+GET http://localhost:8080/pizzas/Carbonara
+
+### Get all Pizzas with Ingredients less than
+GET http://localhost:8080/pizzas?totalIngredients=2
+
+###
+

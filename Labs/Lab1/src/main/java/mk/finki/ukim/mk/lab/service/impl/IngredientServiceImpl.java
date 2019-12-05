@@ -1,6 +1,8 @@
 package mk.finki.ukim.mk.lab.service.impl;
 
 import mk.finki.ukim.mk.lab.model.Ingredient;
+import mk.finki.ukim.mk.lab.model.exceptions.DuplicateIngredientNameException;
+import mk.finki.ukim.mk.lab.model.exceptions.InvalidAmountOfSpicyIngredientsException;
 import mk.finki.ukim.mk.lab.model.exceptions.InvalidIngredientsIdException;
 import mk.finki.ukim.mk.lab.repository.IngredientRepository;
 import mk.finki.ukim.mk.lab.service.IngredientService;
@@ -23,6 +25,12 @@ public class IngredientServiceImpl implements IngredientService {
 
     @Override
     public Ingredient createIngredient(String name, boolean spicy, float amount, boolean veggie) {
+        if (this.ingredientRepository.findById(name).isPresent())
+            throw new DuplicateIngredientNameException(name);
+        if (spicy) {
+            int noOfSpicyIngredients = this.ingredientRepository.countAllBySpicyIsTrue();
+            if (noOfSpicyIngredients > 2) throw new InvalidAmountOfSpicyIngredientsException();
+        }
         return this.ingredientRepository.save(new Ingredient(name, spicy, amount, veggie));
     }
 
@@ -57,6 +65,5 @@ public class IngredientServiceImpl implements IngredientService {
     public List<Ingredient> getBySpicy(boolean spicy) {
         return this.ingredientRepository.getBySpicy(spicy);
     }
-
 
 }

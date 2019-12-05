@@ -1,7 +1,9 @@
 package mk.finki.ukim.mk.lab.web.rest;
 
 import mk.finki.ukim.mk.lab.model.Ingredient;
+import mk.finki.ukim.mk.lab.model.Pizza;
 import mk.finki.ukim.mk.lab.service.IngredientService;
+import mk.finki.ukim.mk.lab.service.PizzaService;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.util.MimeTypeUtils;
@@ -14,17 +16,19 @@ import java.util.List;
 public class IngredientsApi {
 
     private final IngredientService ingredientService;
+    private final PizzaService pizzaService;
 
-    public IngredientsApi(IngredientService ingredientService) {
+    public IngredientsApi(IngredientService ingredientService, PizzaService pizzaService) {
         this.ingredientService = ingredientService;
+        this.pizzaService = pizzaService;
     }
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public Ingredient testing(@RequestParam String name,
-                              @RequestParam boolean spicy,
-                              @RequestParam float amount,
-                              @RequestParam boolean veggie) {
+    public Ingredient createIngredient(@RequestParam String name,
+                                       @RequestParam boolean spicy,
+                                       @RequestParam float amount,
+                                       @RequestParam boolean veggie) {
         return this.ingredientService.createIngredient(name, spicy, amount, veggie);
     }
 
@@ -56,6 +60,11 @@ public class IngredientsApi {
     @GetMapping(params = "spicy")
     public List<Ingredient> getBySpicy(@RequestParam boolean spicy) {
         return this.ingredientService.getBySpicy(spicy);
+    }
+
+    @GetMapping("/{id}/pizzas")
+    public List<Pizza> getAllPizzasWithIngredient(@PathVariable String id) {
+        return this.pizzaService.getAllPizzasWithIngredient(id);
     }
 
 }

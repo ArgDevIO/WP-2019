@@ -6,5 +6,17 @@ import java.util.List;
 
 public interface PizzaService {
     List<Pizza> listPizzas();
+
+    Pizza createPizza(String name, String description, List<String> ingredients, boolean veggie);
+
+    Pizza editPizza(String id, String name, String description, List<String> ingredients, boolean veggie);
+
+    void deletePizza(String id);
+
+    List<Pizza> getAllPizzas(int totalIngredients);
+
+    Pizza getPizza(String id);
+
+    List<Pizza> getAllPizzasWithIngredient(String id);
 }
 

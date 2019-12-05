@@ -11,4 +11,6 @@ public interface IngredientRepository extends JpaRepository<Ingredient, String> 
 
     @Query("FROM Ingredient WHERE spicy = ?1")
     List<Ingredient> getBySpicy(@Param("spicy") boolean spicy);
+
+    int countAllBySpicyIsTrue();
 }
