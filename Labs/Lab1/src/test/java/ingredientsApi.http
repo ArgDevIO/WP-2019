@@ -4,7 +4,6 @@ Content-Type: application/x-www-form-urlencoded
 
 name=Testing2&spicy=true&veggie=true&amount=1
 
-
 ### Editing existing Ingredient
 PATCH http://localhost:8080/ingredients/Pickles
 Content-Type: application/x-www-form-urlencoded
@@ -18,7 +17,7 @@ Content-Type: application/x-www-form-urlencoded
 spicy=true
 
 ### Deleting Ingredient
-DELETE http://localhost:8080/ingredients/Test
+DELETE http://localhost:8080/ingredients/Sauce
 
 ### Getting Ingredients Pagination
 GET http://localhost:8080/ingredients

@@ -1,10 +1,12 @@
 package mk.finki.ukim.mk.lab.service.impl;
 
 import mk.finki.ukim.mk.lab.model.Ingredient;
+import mk.finki.ukim.mk.lab.model.Pizza;
 import mk.finki.ukim.mk.lab.model.exceptions.DuplicateIngredientNameException;
 import mk.finki.ukim.mk.lab.model.exceptions.InvalidAmountOfSpicyIngredientsException;
 import mk.finki.ukim.mk.lab.model.exceptions.InvalidIngredientsIdException;
 import mk.finki.ukim.mk.lab.repository.IngredientRepository;
+import mk.finki.ukim.mk.lab.repository.PizzaRepository;
 import mk.finki.ukim.mk.lab.service.IngredientService;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -17,9 +19,11 @@ import java.util.List;
 public class IngredientServiceImpl implements IngredientService {
 
     private final IngredientRepository ingredientRepository;
+    private final PizzaRepository pizzaRepository;
 
-    public IngredientServiceImpl(IngredientRepository ingredientRepository) {
+    public IngredientServiceImpl(IngredientRepository ingredientRepository, PizzaRepository pizzaRepository) {
         this.ingredientRepository = ingredientRepository;
+        this.pizzaRepository = pizzaRepository;
     }
 
 
@@ -48,6 +52,13 @@ public class IngredientServiceImpl implements IngredientService {
 
     @Override
     public void deleteIngredient(String ingredientId) {
+
+        Ingredient ingredient = this.ingredientRepository.findById(ingredientId).orElseThrow(InvalidIngredientsIdException::new);
+
+        List<Pizza> pizzas = this.pizzaRepository.findPizzaByIngredientsContains(ingredient);
+
+        pizzas.forEach(i -> i.getIngredients().remove(ingredient));
+
         this.ingredientRepository.deleteById(ingredientId);
     }
 

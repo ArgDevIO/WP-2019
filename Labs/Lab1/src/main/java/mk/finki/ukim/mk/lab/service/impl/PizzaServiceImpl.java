@@ -4,6 +4,7 @@ import mk.finki.ukim.mk.lab.model.Ingredient;
 import mk.finki.ukim.mk.lab.model.Pizza;
 import mk.finki.ukim.mk.lab.model.exceptions.InvalidIngredientsIdException;
 import mk.finki.ukim.mk.lab.model.exceptions.InvalidPizzaIdException;
+import mk.finki.ukim.mk.lab.model.exceptions.VeggieIngredientsConfilctException;
 import mk.finki.ukim.mk.lab.repository.IngredientRepository;
 import mk.finki.ukim.mk.lab.repository.PizzaRepo;
 import mk.finki.ukim.mk.lab.repository.PizzaRepository;
@@ -12,6 +13,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class PizzaServiceImpl implements PizzaService {
@@ -38,6 +40,14 @@ public class PizzaServiceImpl implements PizzaService {
                 ingredientsList.add(this.ingredientRepository
                         .findById(s)
                         .orElseThrow(InvalidIngredientsIdException::new)));
+
+        if (veggie) {
+            ingredientsList.forEach(ingredient -> {
+                if (!ingredient.isVeggie())
+                    throw new VeggieIngredientsConfilctException();
+            });
+        }
+
         return this.pizzaRepository.save(new Pizza(name, description, ingredientsList, veggie));
     }
 
@@ -50,6 +60,13 @@ public class PizzaServiceImpl implements PizzaService {
                 ingredientList.add(this.ingredientRepository
                         .findById(s)
                         .orElseThrow(InvalidIngredientsIdException::new)));
+
+        if (veggie) {
+            ingredientList.forEach(ingredient -> {
+                if (!ingredient.isVeggie())
+                    throw new VeggieIngredientsConfilctException();
+            });
+        }
 
         pizza.setName(name);
         pizza.setDescription(description);
@@ -80,5 +97,21 @@ public class PizzaServiceImpl implements PizzaService {
     public List<Pizza> getAllPizzasWithIngredient(String id) {
         Ingredient ingredient = this.ingredientRepository.findById(id).orElseThrow(InvalidIngredientsIdException::new);
         return this.pizzaRepository.findPizzaByIngredientsContains(ingredient);
+    }
+
+    @Override
+    public List<Ingredient> getCommonIngredients(String pizza1ID, String pizza2ID) {
+        List<Ingredient> pizza1Ingredients = this.pizzaRepository.findById(pizza1ID)
+                .orElseThrow(InvalidPizzaIdException::new)
+                .getIngredients();
+
+        List<Ingredient> pizza2Ingredients = this.pizzaRepository.findById(pizza2ID)
+                .orElseThrow(InvalidPizzaIdException::new)
+                .getIngredients();
+
+        return pizza2Ingredients
+                .stream()
+                .filter(pizza1Ingredients::contains)
+                .collect(Collectors.toList());
     }
 }

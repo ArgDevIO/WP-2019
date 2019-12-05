@@ -1,5 +1,6 @@
 package mk.finki.ukim.mk.lab.web.rest;
 
+import mk.finki.ukim.mk.lab.model.Ingredient;
 import mk.finki.ukim.mk.lab.model.Pizza;
 import mk.finki.ukim.mk.lab.service.PizzaService;
 import org.springframework.http.HttpStatus;
@@ -49,6 +50,11 @@ public class PizzasApi {
     @GetMapping("/{id}")
     public Pizza getPizza(@PathVariable String id) {
         return this.pizzaService.getPizza(id);
+    }
+
+    @GetMapping("/compare")
+    public List<Ingredient> getCommonIngredients(@RequestParam String pizza1, @RequestParam String pizza2) {
+        return this.pizzaService.getCommonIngredients(pizza1, pizza2);
     }
 
 }

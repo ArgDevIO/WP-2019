@@ -1,5 +1,6 @@
 package mk.finki.ukim.mk.lab.service;
 
+import mk.finki.ukim.mk.lab.model.Ingredient;
 import mk.finki.ukim.mk.lab.model.Pizza;
 
 import java.util.List;
@@ -18,5 +19,7 @@ public interface PizzaService {
     Pizza getPizza(String id);
 
     List<Pizza> getAllPizzasWithIngredient(String id);
+
+    List<Ingredient> getCommonIngredients(String pizza1, String pizza2);
 }
 
