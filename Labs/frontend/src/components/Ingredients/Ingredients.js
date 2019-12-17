@@ -1,20 +1,14 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import ingredientsService from '../repository/axiosIngredientsRepository';
 
 function Ingredients() {
-	const [ingredients, setIngredients] = useState([
-		{
-			name: 'Ham',
-			amount: '200g',
-			spicy: 'False',
-			veggie: 'False'
-		},
-		{
-			name: 'Mushrooms',
-			amount: '100g',
-			spicy: 'False',
-			veggie: 'True'
-		}
-	]);
+	const [ingredients, setIngredients] = useState([]);
+
+	useEffect(() => {
+		ingredientsService.fetchIngredients().then(resp => {
+			setIngredients(resp.data.content);
+		});
+	}, []);
 
 	return (
 		<span className="row">
@@ -33,11 +27,11 @@ function Ingredients() {
 					<tbody>
 						{ingredients.map(item => {
 							return (
-								<tr>
+								<tr key={item.name}>
 									<td scope="col">{item.name}</td>
 									<td scope="col">{item.amount}</td>
-									<td scope="col">{item.spicy}</td>
-									<td scope="col">{item.veggie}</td>
+									<td scope="col">{item.spicy.toString()}</td>
+									<td scope="col">{item.veggie.toString()}</td>
 									<td scope="col">
 										<button className="btn btn-sm btn-secondary">
 											<span className="fa fa-edit" />
