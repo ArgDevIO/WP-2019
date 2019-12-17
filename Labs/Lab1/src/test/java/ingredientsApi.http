@@ -2,7 +2,7 @@
 POST http://localhost:8080/ingredients
 Content-Type: application/x-www-form-urlencoded
 
-name=Cheese&spicy=false&veggie=false&amount=4
+name=Cheese&spicy=true&veggie=false&amount=3
 
 ### Editing existing Ingredient
 PATCH http://localhost:8080/ingredients/Pickles
