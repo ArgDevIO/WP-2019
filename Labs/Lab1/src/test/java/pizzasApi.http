@@ -2,8 +2,7 @@
 POST http://localhost:8080/pizzas
 Content-Type: application/x-www-form-urlencoded
 
-name=Carbonara&description=DeliciousPizza&ingredients=Cheese&ingredients=Mushrooms&ingredients=Sauce&veggie=true
-
+name=Carbonara&description=DeliciousPizza&ingredients=Cheese&ingredients=Pickles&veggie=false
 
 ### Creating Margherita Pizza
 POST http://localhost:8080/pizzas
@@ -37,6 +36,8 @@ GET http://localhost:8080/pizzas?totalIngredients=2
 
 ### Get common ingredients of 2 Pizzas
 GET http://localhost:8080/pizzas/compare?pizza1=Carbonara&pizza2=Margherita
+
+###
 
 
 

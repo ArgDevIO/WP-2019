@@ -34,10 +34,10 @@ public class IngredientsApi {
 
     @PatchMapping("/{id}")
     public Ingredient editIngredient(@PathVariable String id,
-                                     @RequestParam String name,
-                                     @RequestParam boolean spicy,
-                                     @RequestParam float amount,
-                                     @RequestParam boolean veggie) {
+                                     @RequestParam(required = false) String name,
+                                     @RequestParam(required = false) Boolean spicy,
+                                     @RequestParam(required = false) Float amount,
+                                     @RequestParam(required = false) Boolean veggie) {
         return this.ingredientService.editIngredient(id, name, spicy, amount, veggie);
     }
 

@@ -9,7 +9,7 @@ public interface IngredientService {
 
     Ingredient createIngredient(String name, boolean spicy, float amount, boolean veggie);
 
-    Ingredient editIngredient(String ingredientId, String name, boolean spicy, float amount, boolean veggie);
+    Ingredient editIngredient(String ingredientId, String name, Boolean spicy, Float amount, Boolean veggie);
 
     void deleteIngredient(String ingredientId);
 

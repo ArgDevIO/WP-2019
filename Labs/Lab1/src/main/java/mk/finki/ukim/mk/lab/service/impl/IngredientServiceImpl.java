@@ -39,13 +39,13 @@ public class IngredientServiceImpl implements IngredientService {
     }
 
     @Override
-    public Ingredient editIngredient(String ingredientId, String name, boolean spicy, float amount, boolean veggie) {
+    public Ingredient editIngredient(String ingredientId, String name, Boolean spicy, Float amount, Boolean veggie) {
         Ingredient ingredient = this.ingredientRepository.findById(ingredientId).orElseThrow(InvalidIngredientsIdException::new);
 
-        ingredient.setName(name);
-        ingredient.setSpicy(spicy);
-        ingredient.setAmount(amount);
-        ingredient.setVeggie(veggie);
+        if (name != null) ingredient.setName(name);
+        if (spicy != null)ingredient.setSpicy(spicy);
+        if (amount != null)ingredient.setAmount(amount);
+        if (veggie != null)ingredient.setVeggie(veggie);
 
         return this.ingredientRepository.save(ingredient);
     }
