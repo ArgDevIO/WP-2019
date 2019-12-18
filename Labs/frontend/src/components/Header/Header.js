@@ -32,9 +32,9 @@ function Header() {
 						</li>
 					</ul>
 					<form className="form-inline mt-2 mt-md-0 ml-3">
-						<a className="btn btn-outline-info my-2 my-sm-0" href="#">
+						<Link className="btn btn-outline-info my-2 my-sm-0" to="#">
 							Login
-						</a>
+						</Link>
 					</form>
 				</div>
 			</nav>
