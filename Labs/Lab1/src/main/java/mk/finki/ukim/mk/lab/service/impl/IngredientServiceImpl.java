@@ -43,9 +43,9 @@ public class IngredientServiceImpl implements IngredientService {
         Ingredient ingredient = this.ingredientRepository.findById(ingredientId).orElseThrow(InvalidIngredientsIdException::new);
 
         if (name != null) ingredient.setName(name);
-        if (spicy != null)ingredient.setSpicy(spicy);
-        if (amount != null)ingredient.setAmount(amount);
-        if (veggie != null)ingredient.setVeggie(veggie);
+        if (spicy != null) ingredient.setSpicy(spicy);
+        if (amount != null) ingredient.setAmount(amount);
+        if (veggie != null) ingredient.setVeggie(veggie);
 
         return this.ingredientRepository.save(ingredient);
     }
