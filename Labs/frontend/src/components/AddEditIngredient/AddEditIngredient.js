@@ -2,23 +2,32 @@ import React, { useState, useEffect } from 'react';
 import { useParams, useHistory } from 'react-router-dom';
 import IngredientService from '../repository/axiosIngredientsRepository';
 
-function EditIngredient(props) {
-  const [name, setName] = useState(null);
-  const [amount, setAmount] = useState(null);
-  const [spicy, setSpicy] = useState(null);
-  const [veggie, setVeggie] = useState(null);
+function AddEditIngredient(props) {
+  const [name, setName] = useState('');
+  const [amount, setAmount] = useState('');
+  const [spicy, setSpicy] = useState(false);
+  const [veggie, setVeggie] = useState(false);
+
+  const [errorMsg, setErrorMsg] = useState('');
 
   const { ingredientId } = useParams();
   const history = useHistory();
 
   useEffect(() => {
-    IngredientService.fetchIngredientById(ingredientId).then(res => {
-      setName(res.data.name);
-      setAmount(res.data.amount);
-      setSpicy(res.data.spicy);
-      setVeggie(res.data.veggie);
-    });
-  }, [ingredientId]);
+    let mounted = true;
+
+    if (props.edit) {
+      IngredientService.fetchIngredientById(ingredientId).then(res => {
+        if (mounted) {
+          setName(res.data.name);
+          setAmount(res.data.amount);
+          setSpicy(res.data.spicy);
+          setVeggie(res.data.veggie);
+        }
+      });
+    }
+    return () => (mounted = false);
+  }, [ingredientId, props.edit]);
 
   const handleChange = e => {
     const { name, value } = e.target;
@@ -47,16 +56,45 @@ function EditIngredient(props) {
 
   const saveIngredient = e => {
     e.preventDefault();
-    IngredientService.saveIngredientById(
-      ingredientId,
-      name,
-      amount,
-      veggie,
-      spicy
-    ).then(res => console.log(res));
-
-    history.push('/ingredients');
+    if (props.edit) {
+      IngredientService.saveIngredientById(
+        ingredientId,
+        name,
+        amount,
+        veggie,
+        spicy
+      ).then(resp => {
+        const { newName, newAmount, newVeggie, newSpicy } = resp.data;
+        props.onSave({ ingredientId, newName, newAmount, newVeggie, newSpicy });
+        history.push('/ingredients');
+      });
+    } else {
+      IngredientService.addIngredient(name, spicy, veggie, amount)
+        .then(res => {
+          //const { newName, newAmount, newVeggie, newSpicy } = res.data;
+          props.onSave({ ingredientId, name, amount, veggie, spicy });
+          history.push('/ingredients');
+        })
+        .catch(error => {
+          setErrorMsg(error.response.data.message);
+        });
+    }
   };
+
+  const resetForm = e => {
+    e.preventDefault();
+    setName('');
+    setAmount(0);
+    setSpicy(false);
+    setVeggie(false);
+    setErrorMsg('');
+  };
+
+  const errorView = (
+    <div className="alert alert-warning" role="alert">
+      {errorMsg}
+    </div>
+  );
 
   return (
     <div className="row">
@@ -132,21 +170,34 @@ function EditIngredient(props) {
           <div className="offset-sm-1 col-sm-3  text-center">
             <button
               onClick={saveIngredient}
+              disabled={
+                name === '' ||
+                name.length > 50 ||
+                amount === '' ||
+                amount.length > 50
+              }
               type="submit"
               className="btn btn-primary text-upper">
               Save
             </button>
           </div>
           <div className="offset-sm-1 col-sm-3  text-center">
-            <button className="btn btn-warning text-upper">Reset</button>
+            <button onClick={resetForm} className="btn btn-warning text-upper">
+              Reset
+            </button>
           </div>
           <div className="offset-sm-1 col-sm-3  text-center">
-            <button className="btn btn-danger text-upper">Cancel</button>
+            <button
+              onClick={e => history.push('/ingredients')}
+              className="btn btn-danger text-upper">
+              Cancel
+            </button>
           </div>
         </div>
+        {errorMsg ? errorView : null}
       </form>
     </div>
   );
 }
 
-export default EditIngredient;
+export default AddEditIngredient;

@@ -2,7 +2,7 @@ import React from 'react';
 
 import { Link } from 'react-router-dom';
 
-export default function ActionButtons({ ingredient }) {
+export default function ActionButtons({ ingredient, deleteIngredient }) {
   return (
     <>
       <Link
@@ -11,13 +11,17 @@ export default function ActionButtons({ ingredient }) {
         <span className="fa fa-edit" />
         <strong>Edit</strong>
       </Link>
-      <button className="btn btn-sm btn-outline-secondary mr-1">
+      <button
+        onClick={() => deleteIngredient(ingredient.name)}
+        className="btn btn-sm btn-outline-secondary mr-1">
         <span className="fa fa-remove" />
         <strong>Remove</strong>
       </button>
-      <button className="btn btn-sm btn-outline-dark mr-1">
+      <Link
+        to={`/ingredients/${ingredient.name}/details`}
+        className="btn btn-sm btn-outline-dark mr-1">
         <strong>Details</strong>
-      </button>
+      </Link>
     </>
   );
 }

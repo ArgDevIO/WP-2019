@@ -22,6 +22,28 @@ const IngredientsService = {
         }
       }
     );
+  },
+  deleteIngredientById: id => {
+    axios.delete(`/ingredients/${id}`);
+  },
+  addIngredient: (name, spicy, veggie, amount) => {
+    return axios.post(
+      '/ingredients',
+      qs.stringify({
+        name,
+        amount,
+        veggie,
+        spicy
+      }),
+      {
+        headers: {
+          'Content-Type': 'application/x-www-form-urlencoded'
+        }
+      }
+    );
+  },
+  fetchAllPizzaContaining: id => {
+    return axios.get(`/ingredients/${id}/pizzas`);
   }
 };
 
