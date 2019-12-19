@@ -3,14 +3,16 @@ import React from 'react';
 //Components
 import ActionButtons from './ActionButtons';
 
-export default function Ingredient({ name, amount, spicy, veggie }) {
+export default function Ingredient({ ingredient }) {
   return (
     <tr>
-      <td>{name}</td>
-      <td>{amount}</td>
-      <td>{spicy.toString()}</td>
-      <td>{veggie.toString()}</td>
-      <td>{/* <ActionButtons ingredient={ingredient} /> */}</td>
+      <td>{ingredient.name}</td>
+      <td>{ingredient.amount}</td>
+      <td>{ingredient.spicy.toString()}</td>
+      <td>{ingredient.veggie.toString()}</td>
+      <td>
+        <ActionButtons ingredient={ingredient} />
+      </td>
     </tr>
   );
 }

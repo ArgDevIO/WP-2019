@@ -1,10 +1,28 @@
 import axios from '../../custom-axios/axios';
-//import qs from 'qs';
+import qs from 'qs';
 
 const IngredientsService = {
-	fetchIngredients: () => {
-		return axios.get('/ingredients');
-	}
+  fetchIngredients: () => {
+    return axios.get('/ingredients');
+  },
+  fetchIngredientById: id => {
+    return axios.get(`/ingredients/${id}`);
+  },
+  saveIngredientById: (id, name, amount, veggie, spicy) => {
+    return axios.patch(
+      `/ingredients/${id}`,
+      qs.stringify({
+        amount,
+        veggie,
+        spicy
+      }),
+      {
+        headers: {
+          'Content-Type': 'application/x-www-form-urlencoded'
+        }
+      }
+    );
+  }
 };
 
 export default IngredientsService;

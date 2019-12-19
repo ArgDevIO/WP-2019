@@ -1,21 +1,61 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, useHistory } from 'react-router-dom';
-import axios from '../../custom-axios/axios';
+import IngredientService from '../repository/axiosIngredientsRepository';
 
 function EditIngredient(props) {
-  const [ingredient, setIngredient] = useState({});
+  const [name, setName] = useState(null);
+  const [amount, setAmount] = useState(null);
+  const [spicy, setSpicy] = useState(null);
+  const [veggie, setVeggie] = useState(null);
+
   const { ingredientId } = useParams();
+  const history = useHistory();
 
   useEffect(() => {
-    axios.get(`/ingredients/${ingredientId}`).then(data => {
-      setIngredient(data.data);
+    IngredientService.fetchIngredientById(ingredientId).then(res => {
+      setName(res.data.name);
+      setAmount(res.data.amount);
+      setSpicy(res.data.spicy);
+      setVeggie(res.data.veggie);
     });
-  }, []);
+  }, [ingredientId]);
 
   const handleChange = e => {
-    const paramName = e.target.name;
-    const paramValue = e.target.value;
-    setIngredient({ paramName: paramValue });
+    const { name, value } = e.target;
+
+    switch (name) {
+      case 'name': {
+        setName(value);
+        break;
+      }
+      case 'amount': {
+        setAmount(value);
+        break;
+      }
+      case 'spicy': {
+        setSpicy(!spicy);
+        break;
+      }
+      case 'veggie': {
+        setVeggie(!veggie);
+        break;
+      }
+      default:
+        break;
+    }
+  };
+
+  const saveIngredient = e => {
+    e.preventDefault();
+    IngredientService.saveIngredientById(
+      ingredientId,
+      name,
+      amount,
+      veggie,
+      spicy
+    ).then(res => console.log(res));
+
+    history.push('/ingredients');
   };
 
   return (
@@ -34,8 +74,8 @@ function EditIngredient(props) {
               className="form-control"
               id="ingredient"
               placeholder="Ingredient name"
-              name="amount"
-              value={ingredient.name}
+              name="name"
+              value={name}
               onChange={handleChange}
             />
           </div>
@@ -51,7 +91,7 @@ function EditIngredient(props) {
               id="amount"
               placeholder="Amount"
               name="amount"
-              value={ingredient.amount}
+              value={amount}
               onChange={handleChange}
             />
           </div>
@@ -63,7 +103,9 @@ function EditIngredient(props) {
           <div className="col-sm-6 col-xl-4">
             <input
               type="checkbox"
-              checked={ingredient.veggie}
+              name="veggie"
+              checked={veggie}
+              onChange={handleChange}
               className="form-control"
               id="veggie"
             />
@@ -77,7 +119,9 @@ function EditIngredient(props) {
           <div className="col-sm-6 col-xl-4">
             <input
               type="checkbox"
-              checked={ingredient.spicy}
+              name="spicy"
+              checked={spicy}
+              onChange={handleChange}
               className="form-control"
               id="spicy"
             />
@@ -86,7 +130,10 @@ function EditIngredient(props) {
 
         <div className="form-group row">
           <div className="offset-sm-1 col-sm-3  text-center">
-            <button type="submit" className="btn btn-primary text-upper">
+            <button
+              onClick={saveIngredient}
+              type="submit"
+              className="btn btn-primary text-upper">
               Save
             </button>
           </div>
