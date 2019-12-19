@@ -2,7 +2,7 @@
 POST http://localhost:8080/pizzas
 Content-Type: application/x-www-form-urlencoded
 
-name=Carbonara&description=DeliciousPizza&ingredients=Cheese&ingredients=Pickles&veggie=false
+name=Carbonara&description=DeliciousPizza&ingredients=Cheese&ingredients=Sauce&veggie=false
 
 ### Creating Margherita Pizza
 POST http://localhost:8080/pizzas

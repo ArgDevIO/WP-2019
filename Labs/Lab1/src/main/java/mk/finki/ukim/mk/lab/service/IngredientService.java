@@ -7,9 +7,9 @@ import java.util.List;
 
 public interface IngredientService {
 
-    Ingredient createIngredient(String name, boolean spicy, float amount, boolean veggie);
+    Ingredient createIngredient(String name, boolean spicy, String amount, boolean veggie);
 
-    Ingredient editIngredient(String ingredientId, String name, Boolean spicy, Float amount, Boolean veggie);
+    Ingredient editIngredient(String ingredientId, String name, Boolean spicy, String amount, Boolean veggie);
 
     void deleteIngredient(String ingredientId);
 

@@ -26,9 +26,8 @@ public class IngredientServiceImpl implements IngredientService {
         this.pizzaRepository = pizzaRepository;
     }
 
-
     @Override
-    public Ingredient createIngredient(String name, boolean spicy, float amount, boolean veggie) {
+    public Ingredient createIngredient(String name, boolean spicy, String amount, boolean veggie) {
         if (this.ingredientRepository.findById(name).isPresent())
             throw new DuplicateIngredientNameException(name);
         if (spicy) {
@@ -39,7 +38,7 @@ public class IngredientServiceImpl implements IngredientService {
     }
 
     @Override
-    public Ingredient editIngredient(String ingredientId, String name, Boolean spicy, Float amount, Boolean veggie) {
+    public Ingredient editIngredient(String ingredientId, String name, Boolean spicy, String amount, Boolean veggie) {
         Ingredient ingredient = this.ingredientRepository.findById(ingredientId).orElseThrow(InvalidIngredientsIdException::new);
 
         if (name != null) ingredient.setName(name);
@@ -76,5 +75,4 @@ public class IngredientServiceImpl implements IngredientService {
     public List<Ingredient> getBySpicy(boolean spicy) {
         return this.ingredientRepository.getBySpicy(spicy);
     }
-
 }

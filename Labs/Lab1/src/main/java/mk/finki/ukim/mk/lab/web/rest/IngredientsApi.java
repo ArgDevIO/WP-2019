@@ -28,7 +28,7 @@ public class IngredientsApi {
     @ResponseStatus(HttpStatus.CREATED)
     public Ingredient createIngredient(@RequestParam String name,
                                        @RequestParam boolean spicy,
-                                       @RequestParam float amount,
+                                       @RequestParam String amount,
                                        @RequestParam boolean veggie) {
         return this.ingredientService.createIngredient(name, spicy, amount, veggie);
     }
@@ -37,7 +37,7 @@ public class IngredientsApi {
     public Ingredient editIngredient(@PathVariable String id,
                                      @RequestParam(required = false) String name,
                                      @RequestParam(required = false) Boolean spicy,
-                                     @RequestParam(required = false) Float amount,
+                                     @RequestParam(required = false) String amount,
                                      @RequestParam(required = false) Boolean veggie) {
         return this.ingredientService.editIngredient(id, name, spicy, amount, veggie);
     }
